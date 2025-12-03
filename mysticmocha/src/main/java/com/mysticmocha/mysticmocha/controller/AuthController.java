@@ -14,7 +14,6 @@ import com.mysticmocha.mysticmocha.domain.Usuario;
 import com.mysticmocha.mysticmocha.repository.UsuarioRepository;
 import com.mysticmocha.mysticmocha.service.AuthService;
 import com.mysticmocha.mysticmocha.service.UsuarioService;
-import com.mysticmocha.mysticmocha.domain.Gestor;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,7 +29,7 @@ public class AuthController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastrarCliente(@RequestBody Gestor usuario) {
+    public ResponseEntity<?> cadastrarCliente(@RequestBody Usuario usuario) {
         try {
             usuarioService.createUser(usuario);
             return ResponseEntity.ok("Novo cliente cadastrado com sucesso!");
@@ -47,6 +46,8 @@ public class AuthController {
             String token = authService.login(loginRequest.getNickname(), loginRequest.getSenha());
 
             Optional<Usuario> usuario = usuarioRepository.findByNickname(loginRequest.getNickname());
+            System.out.println("Usuário encontrado: " + usuario.isPresent());
+
 
             if (usuario.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

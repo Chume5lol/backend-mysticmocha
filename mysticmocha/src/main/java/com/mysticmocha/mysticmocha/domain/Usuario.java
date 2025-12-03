@@ -66,6 +66,9 @@ public class Usuario implements UserDetails{
 		this.habilitado = true;
 	}
 
+	public Usuario() {
+	}
+
 	public Usuario(Long id, String nome, String sobrenome, String email, String nickname, Setor departamento,
 			String cargo, String senha, Perfil perfil, Boolean habilitado) {
 		this.id = id;
