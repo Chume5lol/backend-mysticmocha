@@ -1,9 +1,10 @@
 package com.mysticmocha.mysticmocha.repository;
 
-import com.mysticmocha.mysticmocha.domain.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.mysticmocha.mysticmocha.domain.Chamado;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
+
 }
