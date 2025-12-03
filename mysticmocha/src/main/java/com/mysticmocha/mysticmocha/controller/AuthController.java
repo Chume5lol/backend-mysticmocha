@@ -38,24 +38,41 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             // faz login e gera token
             String token = authService.login(loginRequest.getNickname(), loginRequest.getSenha());
 
-            // busca o usuário logado
             Optional<Usuario> usuario = usuarioRepository.findByNickname(loginRequest.getNickname());
+
+            if (usuario.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "Usuário não encontrado!"));
+            }
+
+            // monta o objeto do usuário para enviar ao frontend
+            Map<String, Object> usuarioMap = Map.of(
+                    "id", usuario.get().getId(),
+                    "nome", usuario.get().getNome(),
+                    "nickname", usuario.get().getNickname(),
+                    "role", usuario.get().getPerfil() // role
+            );
 
             return ResponseEntity.ok(Map.of(
                     "token", token,
-                    "usuario", usuario,
-                    "message", "Login realizado com sucesso!"));
+                    "usuario", usuarioMap,
+                    "message", "Login realizado com sucesso!"
+            ));
 
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", "Nickname ou senha inválidos!"));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", ex.getMessage()));
         }
     }
 
