@@ -2,6 +2,8 @@ package com.mysticmocha.mysticmocha.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Chat {
 
     @OneToOne
     @JoinColumn(name = "chamado_id", nullable = false, unique = true)
+    @JsonBackReference
     private Chamado chamado;
 
     @ManyToOne
@@ -50,5 +53,5 @@ public class Chat {
         this.solicitante = solicitante;
         this.mensagens = mensagens;
     }
-    
+
 }

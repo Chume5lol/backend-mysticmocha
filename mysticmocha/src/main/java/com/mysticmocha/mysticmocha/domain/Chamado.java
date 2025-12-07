@@ -2,6 +2,8 @@ package com.mysticmocha.mysticmocha.domain;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,10 +30,10 @@ public class Chamado {
     @Column
     private String categoria;
 
-    @Column
+    @Column(length = 150)
     private String titulo;
 
-    @Column
+    @Column(length = 1500)
     private String descricao;
 
     @ManyToOne
@@ -43,6 +45,7 @@ public class Chamado {
     private Usuario atendente;
 
     @OneToOne(mappedBy = "chamado", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Chat chat;
 
     @Column
@@ -76,5 +79,4 @@ public class Chamado {
         this.status = status;
     }
 
-    
 }

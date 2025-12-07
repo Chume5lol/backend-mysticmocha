@@ -2,6 +2,8 @@ package com.mysticmocha.mysticmocha.domain;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,11 +25,13 @@ public class Mensagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "chamado_id")
     private Long idChamado;
 
+
     @ManyToOne
-    @JoinColumn(name = "chat_id", nullable = false)
+    @JoinColumn(name = "chat_id")
+    @JsonBackReference
     private Chat chat;
 
     @ManyToOne
@@ -52,6 +56,4 @@ public class Mensagem {
         this.dataEnvio = dataEnvio;
     }
 
-    
-    
 }

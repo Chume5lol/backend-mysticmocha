@@ -17,6 +17,7 @@ import com.mysticmocha.mysticmocha.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5174")
 public class AuthController {
 
     @Autowired
@@ -38,7 +39,6 @@ public class AuthController {
         }
     }
     
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
