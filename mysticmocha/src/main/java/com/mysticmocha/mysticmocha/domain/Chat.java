@@ -43,6 +43,7 @@ public class Chat {
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mensagem> mensagens;
 
+
     public Chat() {
     }
 

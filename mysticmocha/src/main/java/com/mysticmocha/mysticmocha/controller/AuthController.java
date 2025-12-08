@@ -13,15 +13,12 @@ import com.mysticmocha.mysticmocha.domain.LoginRequest;
 import com.mysticmocha.mysticmocha.domain.Usuario;
 import com.mysticmocha.mysticmocha.repository.UsuarioRepository;
 import com.mysticmocha.mysticmocha.service.AuthService;
-import com.mysticmocha.mysticmocha.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5174")
 public class AuthController {
 
-    @Autowired
-    private UsuarioService usuarioService;
 
     @Autowired
     private AuthService authService;
@@ -29,15 +26,7 @@ public class AuthController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastrarCliente(@RequestBody Usuario usuario) {
-        try {
-            usuarioService.createUser(usuario);
-            return ResponseEntity.ok("Novo cliente cadastrado com sucesso!");
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-    }
+    
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -59,7 +48,7 @@ public class AuthController {
                     "id", usuario.get().getId(),
                     "nome", usuario.get().getNome(),
                     "nickname", usuario.get().getNickname(),
-                    "role", usuario.get().getPerfil() // role
+                    "role", usuario.get().getPerfil() 
             );
 
             return ResponseEntity.ok(Map.of(

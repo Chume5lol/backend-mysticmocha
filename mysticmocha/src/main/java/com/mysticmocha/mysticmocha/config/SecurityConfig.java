@@ -27,14 +27,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // usa o bean
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/chamados/**").authenticated()
                 
-                .requestMatchers("/administrador/*").hasRole("ADMINISTRADOR")
+                .requestMatchers("/administrador/**").hasRole("ADMINISTRADOR")
                 .requestMatchers("/chamados/*").authenticated()
                 .anyRequest().authenticated()
             )

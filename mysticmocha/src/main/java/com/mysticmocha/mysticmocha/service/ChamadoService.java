@@ -59,8 +59,10 @@ public class ChamadoService {
 
     public List<Mensagem> buscarMensagensPorChamado(Long id) {
 
-        List<Mensagem> mensagens = chamadoRepository.findAllMensagensByChamado(id);
+        List<Mensagem> mensagens = chamadoRepository.findAllMensagensByChatId(id);
 
         return mensagens;
     }
+
+
 }

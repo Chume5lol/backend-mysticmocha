@@ -9,8 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mysticmocha.mysticmocha.domain.ENUMS.Perfil;
-import com.mysticmocha.mysticmocha.domain.ENUMS.Setor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,8 +46,7 @@ public class Usuario implements UserDetails{
     private String nickname;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Setor departamento;
+    private String departamento;
 
     @Column(nullable = false, length = 70)
     private String cargo;
@@ -69,7 +68,7 @@ public class Usuario implements UserDetails{
 	public Usuario() {
 	}
 
-	public Usuario(Long id, String nome, String sobrenome, String email, String nickname, Setor departamento,
+	public Usuario(Long id, String nome, String sobrenome, String email, String nickname, String departamento,
 			String cargo, String senha, Perfil perfil, Boolean habilitado) {
 		this.id = id;
 		this.nome = nome;
@@ -84,6 +83,7 @@ public class Usuario implements UserDetails{
 	}
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
         String role = "ROLE_"+perfil.name();

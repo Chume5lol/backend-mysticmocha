@@ -39,7 +39,7 @@ public class ChatService {
         Chat chat = chatRepository.findByChamadoId(id)
                 .orElseThrow(() -> new RuntimeException("Chat não encontrado"));
         
-        Usuario remetente = usuarioRepository.findById(id)
+        Usuario remetente = usuarioRepository.findById(dto.getRemetenteId())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         
         Mensagem mensagem = new Mensagem();
