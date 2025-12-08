@@ -26,11 +26,12 @@ public class ChamadoController {
     private ChamadoService chamadoService;
 
 
+
     @PostMapping("/criarChamado")
     public ResponseEntity<?> criarChamado(@RequestBody Chamado chamado) {
         try {
             chamado.setStatus("Aguardando atendimento");
-            chamadoService.criarChamado(chamado);
+            chamadoService.criarChamado(chamado);          
             return ResponseEntity.ok("Chamado criado com sucesso!");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

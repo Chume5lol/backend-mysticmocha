@@ -27,14 +27,16 @@ public class ProdutoService {
 
     // CRIAR
     public Produto criar(Produto produto) {
-        produto.setId(null); 
-        if (produto.getQuantidade() == null) {
-            produto.setQuantidade(0);
-        }
-        if (produto.getAtivo() == null) {
-            produto.setAtivo(true);
-        }
-        return produtoRepository.save(produto);
+        Produto novoProduto = new Produto();
+
+        novoProduto.setNome(produto.getNome());
+        novoProduto.setDescricao(produto.getDescricao());
+        novoProduto.setCodigoProduto(produto.getCodigoProduto());
+        novoProduto.setPreco(produto.getPreco());
+        novoProduto.setQuantidade(produto.getQuantidade());
+        novoProduto.setAtivo(true);
+
+        return produtoRepository.save(novoProduto);
     }
 
     // ATUALIZAR

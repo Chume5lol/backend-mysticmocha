@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.mysticmocha.mysticmocha.domain.Administrador;
 import com.mysticmocha.mysticmocha.domain.Cliente;
-import com.mysticmocha.mysticmocha.domain.Gestor;
 import com.mysticmocha.mysticmocha.domain.Prestador;
 import com.mysticmocha.mysticmocha.domain.Usuario;
 import com.mysticmocha.mysticmocha.repository.UsuarioRepository;
@@ -35,8 +34,6 @@ public class UsuarioService {
                 return createAndSaveAdministrador(usuario);
             case CLIENTE:
                 return createAndSaveCliente(usuario);
-            case GESTOR:
-                return createAndSaveGestor(usuario);
             default:
                 return createAndSaveCliente(usuario);
         }
@@ -60,12 +57,6 @@ public class UsuarioService {
         return usuarioRepository.save(cliente);
     }
 
-    private Gestor createAndSaveGestor(Usuario u) {
-        Gestor gestor = new Gestor(u.getId(), u.getNome(), u.getSobrenome(), u.getEmail(), u.getNickname(),
-                u.getDepartamento(), u.getCargo(), u.getSenha(), u.getPerfil(), u.getHabilitado());
-        System.out.println(gestor);
-        return usuarioRepository.save(gestor);
-    }
 
     public List<Usuario> buscarUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();

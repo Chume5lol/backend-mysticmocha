@@ -48,6 +48,7 @@ public class AuthController {
                     "id", usuario.get().getId(),
                     "nome", usuario.get().getNome(),
                     "nickname", usuario.get().getNickname(),
+                    "departamento", usuario.get().getDepartamento(),
                     "role", usuario.get().getPerfil() 
             );
 

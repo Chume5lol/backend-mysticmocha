@@ -10,13 +10,21 @@ import org.springframework.stereotype.Service;
 import com.mysticmocha.mysticmocha.domain.Chamado;
 import com.mysticmocha.mysticmocha.domain.Chat;
 import com.mysticmocha.mysticmocha.domain.Mensagem;
+import com.mysticmocha.mysticmocha.domain.Usuario;
 import com.mysticmocha.mysticmocha.repository.ChamadoRepository;
+import com.mysticmocha.mysticmocha.repository.UsuarioRepository;
 
 @Service
 public class ChamadoService {
 
     @Autowired
     private ChamadoRepository chamadoRepository;
+
+    @Autowired
+    EmailServiceImpl emailServiceImpl;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public Chamado criarChamado(Chamado chamado) {
         Chat chat = new Chat();
@@ -27,7 +35,21 @@ public class ChamadoService {
 
         chamado.setChat(chat);
 
-        return chamadoRepository.save(chamado);
+        chamadoRepository.save(chamado);
+
+        Usuario solicitante = usuarioRepository.findById(chamado.getSolicitante().getId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        String solicitanteEmail = solicitante.getEmail();
+
+        try {
+            emailServiceImpl.sendSimpleMessage(solicitanteEmail, "Criado chamado número :", "Teste");
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return chamado;
     }
 
     public void atualizarChamado(Long idChamado, String status, LocalDateTime dataAtualizacao) {
@@ -63,6 +85,5 @@ public class ChamadoService {
 
         return mensagens;
     }
-
 
 }
