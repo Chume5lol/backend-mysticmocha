@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mysticmocha.mysticmocha.domain.Chamado;
 import com.mysticmocha.mysticmocha.domain.Mensagem;
 import com.mysticmocha.mysticmocha.service.ChamadoService;
+import com.mysticmocha.mysticmocha.service.EmailServiceImpl;
 
 @RestController
 @RequestMapping(value = { "/chamados" })
@@ -25,6 +26,9 @@ public class ChamadoController {
     @Autowired
     private ChamadoService chamadoService;
 
+    @Autowired
+    private EmailServiceImpl emailServiceImpl;
+
 
 
     @PostMapping("/criarChamado")
@@ -32,6 +36,9 @@ public class ChamadoController {
         try {
             chamado.setStatus("Aguardando atendimento");
             chamadoService.criarChamado(chamado);          
+            
+            emailServiceImpl.sendSimpleMessage(null, null, null);
+
             return ResponseEntity.ok("Chamado criado com sucesso!");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
