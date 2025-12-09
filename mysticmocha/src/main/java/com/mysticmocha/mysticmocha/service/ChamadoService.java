@@ -42,12 +42,7 @@ public class ChamadoService {
 
         String solicitanteEmail = solicitante.getEmail();
 
-        try {
-            emailServiceImpl.sendSimpleMessage(solicitanteEmail, "Criado chamado número :", "Teste");
-        } catch (Exception e) {
-            System.err.println("Erro ao enviar email: " + e.getMessage());
-            e.printStackTrace();
-        }
+        System.out.println(solicitanteEmail);
 
         return chamado;
     }

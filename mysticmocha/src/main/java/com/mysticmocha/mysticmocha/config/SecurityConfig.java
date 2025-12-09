@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/administrador/**").hasRole("ADMINISTRADOR")
                         .requestMatchers("/estoque/**").hasAnyRole("ADMINISTRADOR", "PRESTADOR")
                         .requestMatchers("/chamados/*").authenticated()
+                        .requestMatchers("/dashboard/*").hasAnyRole("ADMINISTRADOR", "VIEW_DASHBOARD")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
