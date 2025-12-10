@@ -13,7 +13,7 @@ public class MailConfig {
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(System.getenv("MAIL_HOST"));
+        mailSender.setHost(System.getenv("MAIL_MYSTICMOCHA_HOST"));
         mailSender.setPort(587);
         mailSender.setUsername(System.getenv("MAIL_MYSTICMOCHA_USER"));
         mailSender.setPassword(System.getenv("MAIL_MYSTICMOCHA_PASSWORD"));

@@ -3,7 +3,6 @@ package com.mysticmocha.mysticmocha.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +58,6 @@ public class UsuarioService {
     }
 
 
-    @Cacheable(value = "usuarios")
     public List<Usuario> buscarUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
 

@@ -3,6 +3,7 @@ package com.mysticmocha.mysticmocha.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,6 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.mysticmocha.mysticmocha.security.JwtRequestFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -34,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/administrador/**").hasRole("ADMINISTRADOR")
                         .requestMatchers("/estoque/**").hasAnyRole("ADMINISTRADOR", "PRESTADOR")
-                        .requestMatchers("/chamados/*").authenticated()
+                        .requestMatchers("/chamados/**").authenticated()
                         .requestMatchers("/dashboard/*").hasAnyRole("ADMINISTRADOR", "VIEW_DASHBOARD")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -56,8 +58,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("http://localhost:*, http://10.100.3.4:5174/"); // aceita qualquer porta
-                                                                                       // localhost
+        config.addAllowedOriginPattern("http://localhost:*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);

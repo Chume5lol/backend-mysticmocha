@@ -29,19 +29,27 @@ public class ChamadoController {
     @Autowired
     private EmailServiceImpl emailServiceImpl;
 
-
-
     @PostMapping("/criarChamado")
     public ResponseEntity<?> criarChamado(@RequestBody Chamado chamado) {
         try {
             chamado.setStatus("Aguardando atendimento");
-            chamadoService.criarChamado(chamado);          
-            
-            emailServiceImpl.sendSimpleMessage(null, null, null);
+            chamadoService.criarChamado(chamado);
+
+            try {
+                emailServiceImpl.sendSimpleMessage(
+                        "chumelol2015@gmail.com",
+                        "Chamado criado",
+                        "Seu chamado foi criado com sucesso!");
+            } catch (Exception ignored) {
+                
+            }
 
             return ResponseEntity.ok("Chamado criado com sucesso!");
+
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ex.getMessage());
         }
     }
 
@@ -50,10 +58,9 @@ public class ChamadoController {
         return ResponseEntity.ok(chamadoService.chamadosUsuario(id));
     }
 
-    
     @GetMapping("/{id}/mensagens")
     public ResponseEntity<List<Mensagem>> listarMensagens(@PathVariable Long id) {
-       
+
         List<Mensagem> mensagens = chamadoService.buscarMensagensPorChamado(id);
 
         return ResponseEntity.ok(mensagens);
